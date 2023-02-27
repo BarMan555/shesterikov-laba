@@ -87,10 +87,31 @@ FigureType Figure3D::get_type() { return type; }
 //	}
 //}
 
+// Определение класса Space -------
+Space::Space() : count(0) {}
+
 Figure3D Space::get_figure_with_max_volume() {
+	int max = 0;
+	for (int i = 0; i < count; ++i) {
+		if()
+	}
+}
+
+void Space::add_figure(Figure3D figure) {
 
 }
 
+int Space::get_count() {
+	return count;
+}
+
+Figure3D Space::operator[](int index) {
+	if (index < 0 || index >= count) {
+		throw std::runtime_error("Invalid index");
+	}
+	return figures[index];
+}
+//-----------------------------------
 int main() {
 
 	return 0;

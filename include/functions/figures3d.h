@@ -46,9 +46,14 @@ public:
 
 class Space {
 	Figure3D figures[SIZE];
+	int count;
 
 public:
+	Space();
+	Figure3D operator[](int);
 	Figure3D get_figure_with_max_volume();
+	void add_figure(Figure3D);
+	int get_count();
 };
 
 void print(Figure3D);
