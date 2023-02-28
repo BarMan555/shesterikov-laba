@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(functions CXX)
+project(figure3d CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -28,6 +28,6 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # Объявляем тесты
-add_executable(figures3d_tests1 "tests/figures3d_tests.cc")
-target_link_libraries(figures3d_tests1 figures3d GTest::gtest_main)
+add_executable(figures3d_tests "tests/figures3d_tests.cc")
+target_link_libraries(figures3d_tests figures3d GTest::gtest_main)
 
