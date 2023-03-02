@@ -41,7 +41,13 @@ FigureType Figure3D::get_type() { return type; }
 
 // Определение класса Space -------
 Space::Space() : count(0) {}
-Figure3D Space::operator[](int index) {
+Figure3D Space::operator[](int index) const {
+	if (index < 0 || index >= count) {
+		throw std::runtime_error("Invalid index");
+	}
+	return figures[index];
+}
+Figure3D& Space::operator[](int index)  {
 	if (index < 0 || index >= count) {
 		throw std::runtime_error("Invalid index");
 	}
@@ -62,6 +68,12 @@ void Space::add_figure(Figure3D figure, int index) {
 	if (count == SIZE) throw std::runtime_error("Array if full");
 	if (index >= SIZE || index < 0) throw std::runtime_error("Invalid index");
 	
+	if ((*this).figures[index].get_volume_figure() == 0) {
+		figures[index] = figure;
+		count++;
+		return;
+	}
+
 	for (int i = SIZE-1; i > index; i--) {
 		figures[i] = figures[i - 1];
 	}

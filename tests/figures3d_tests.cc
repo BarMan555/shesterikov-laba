@@ -93,3 +93,16 @@ TEST(SpaceTest, Space_Delete2) {
     space.delete_figure(0);
     EXPECT_NEAR(space[1].get_volume_figure(), 35, 0.01);
 }
+
+// TEST 13
+TEST(SpaceTest, Figure_Max_Volume_Test) {
+    Space space;
+    Figure3D figure1(BALL, 10); // 4188.666
+    Figure3D figure2(CYLINDER, 5, 10); // 785.375
+    Figure3D figure3(PARALLELEPIPED, 3, 4, 5); //60
+    space.add_figure(figure3, 2);
+    space.add_figure(figure2, 1);
+    space.add_figure(figure1, 0);
+
+    EXPECT_NEAR(space.get_figure_with_max_volume().get_volume_figure(), 4188.666, 0.01);
+}

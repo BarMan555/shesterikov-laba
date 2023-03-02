@@ -30,7 +30,8 @@ class Space {
 
 public:
 	Space();
-	Figure3D operator[](int);
+	Figure3D operator[](int) const;
+	Figure3D& operator[](int);
 	Figure3D get_figure_with_max_volume();
 	void add_figure(Figure3D, int);
 	void delete_figure(int);
