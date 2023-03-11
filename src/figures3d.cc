@@ -42,13 +42,13 @@ FigureType Figure3D::get_type() { return type; }
 // Определение класса Space -------
 Space::Space() : count(0) {}
 Figure3D Space::operator[](int index) const {
-	if (index < 0 || index >= count) {
+	if (index < 0 || index >= SIZE) {
 		throw std::runtime_error("Invalid index");
 	}
 	return figures[index];
 }
 Figure3D& Space::operator[](int index)  {
-	if (index < 0 || index >= count) {
+	if (index < 0 || index >= SIZE) {
 		throw std::runtime_error("Invalid index");
 	}
 	return figures[index];
@@ -56,7 +56,7 @@ Figure3D& Space::operator[](int index)  {
 Figure3D Space::get_figure_with_max_volume(){
 	int max = 0;
 	int index_max = 0;
-	for (int i = 0; i < count; ++i) {
+	for (int i = 0; i < SIZE; ++i) {
 		if ((*this)[i].get_volume_figure() > max) {
 			max = (*this)[i].get_volume_figure();
 			index_max = i;
@@ -68,7 +68,7 @@ void Space::add_figure(Figure3D figure, int index) {
 	if (count == SIZE) throw std::runtime_error("Array if full");
 	if (index >= SIZE || index < 0) throw std::runtime_error("Invalid index");
 	
-	if ((*this).figures[index].get_volume_figure() == 0) {
+	if (figures[index].get_volume_figure() == 0) {
 		figures[index] = figure;
 		count++;
 		return;
@@ -83,8 +83,8 @@ void Space::add_figure(Figure3D figure, int index) {
 }
 
 void Space::delete_figure(int index) {
-	if (index >= count || index < 0) throw std::runtime_error("Invalid index");
-	for (int i = index; i < count; ++i) {
+	if (index >= SIZE || index < 0) throw std::runtime_error("Invalid index");
+	for (int i = index; i < SIZE; ++i) {
 		figures[i] = figures[i + 1];
 	}
 	count--;
