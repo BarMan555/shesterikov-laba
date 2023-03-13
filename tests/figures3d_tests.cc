@@ -1,6 +1,6 @@
 #include <functions/figures3d.h>
 #include <gtest/gtest.h>
- 
+
 // TEST 1
 TEST(Figure3dTest, Figure_Comp1) {
     Figure3D figure;
@@ -52,7 +52,7 @@ TEST(Figure3dTest, FigureVolume_PARALLELEPIPED) {
 // TEST 9
 TEST(SpaceTest, Space_Comp) {
     Space space;
-    EXPECT_EQ(space.get_count(), 0);
+    EXPECT_EQ(space.get_size(), 0);
 }
 
 // TEST 10
@@ -100,9 +100,9 @@ TEST(SpaceTest, Figure_Max_Volume_Test) {
     Figure3D figure1(BALL, 10); // 4188.666
     Figure3D figure2(CYLINDER, 5, 10); // 785.375
     Figure3D figure3(PARALLELEPIPED, 3, 4, 5); //60
-    space.add_figure(figure3, 2);
-    space.add_figure(figure2, 1);
     space.add_figure(figure1, 0);
+    space.add_figure(figure2, 1);
+    space.add_figure(figure3, 2);
 
     EXPECT_NEAR(space.get_figure_with_max_volume().get_volume_figure(), 4188.666, 0.01);
 }

@@ -1,7 +1,4 @@
 #pragma once
-
-static const int SIZE = 5;
-
 enum  FigureType
 {
 	BALL, CYLINDER, PARALLELEPIPED
@@ -15,27 +12,38 @@ class Figure3D {
 
 public:
 	Figure3D();
+	Figure3D(Figure3D&);
 	Figure3D(FigureType, double);
 	Figure3D(FigureType, double, double);
 	Figure3D(FigureType, double, double, double);
 
+	Figure3D& operator=(Figure3D);
+	
+	void swap(Figure3D&) noexcept;
 	double get_square_figure();
 	double get_volume_figure();
+	double get_radius();
+	double get_height();
+	double get_lenght();
 	FigureType get_type();
 };
 
 class Space {
-	Figure3D figures[SIZE];
-	int count;
+	Figure3D** figures;
+	int size;
 
 public:
 	Space();
+	Space(const Space&);
+	~Space();
+
 	Figure3D operator[](int) const;
 	Figure3D& operator[](int);
-	Figure3D get_figure_with_max_volume();
+	Space& operator=(Space);
+
+	Figure3D& get_figure_with_max_volume();
+	void swap(Space&) noexcept;
 	void add_figure(Figure3D, int);
 	void delete_figure(int);
-	int get_count();
+	int get_size();
 };
-
-void print(Figure3D);
