@@ -1,9 +1,65 @@
 #include "functions/figures3d.h"
 #include <stdexcept>
 #include <cmath>
-#include <iostream>
-
 #define PI 3.1415
+
+std::ostream& operator<<(std::ostream& stream, Space& space) {
+	for (int i = 0; i < space.get_size(); ++i) {
+		stream << "Figure #" << i << "\n\tType of Figure: "; 
+		switch (space[i].get_type()) {
+		case 0:
+			stream << "Ball\n";
+			break;
+		case 1:
+			stream << "Cylinder\n";
+			break;
+		case 2:
+			stream << "Parallelepiped\n";
+		}
+		
+		switch (space[i].get_type()) {
+		case BALL:
+			stream << "\tRadius: " << space[i].get_radius() << std::endl;
+			break;
+		case CYLINDER:
+			stream << "\tRadius: " << space[i].get_radius() << "\n\tHeight: " << space[i].get_height() << std::endl;
+			break;
+		case PARALLELEPIPED:
+			stream << "\tFirst line: " << space[i].get_radius() << "\n\tSecond line: " <<
+				space[i].get_height() << "\n\tThird line: " << space[i].get_lenght() << std::endl;
+			break;
+		}
+		stream << std::endl;
+	}
+	return stream;
+}
+std::ostream& operator<<(std::ostream& stream, Figure3D& figure) {
+	stream << "\tType of Figure: ";
+	switch (figure.get_type()) {
+	case 0:
+		stream << "Ball\n";
+		break;
+	case 1:
+		stream << "Cylinder\n";
+		break;
+	case 2:
+		stream << "Parallelepiped\n";
+	}
+
+	switch (figure.get_type()) {
+	case BALL:
+		stream << "\tRadius: " << figure.get_radius() << std::endl;
+		break;
+	case CYLINDER:
+		stream << "\tRadius: " << figure.get_radius() << "\n\tHeight: " << figure.get_height() << std::endl;
+		break;
+	case PARALLELEPIPED:
+		stream << "\tFirst line: " << figure.get_radius() << "\n\tSecond line: " <<
+			figure.get_height() << "\n\tThird line: " << figure.get_lenght() << std::endl;
+		break;
+	}
+	return stream;
+}
 
 // определение класса Figure3D -------
 Figure3D::Figure3D() : type(BALL), radius(0), height(0), lenght(0) {}
@@ -21,6 +77,7 @@ Figure3D& Figure3D::operator=(Figure3D figure) {
 	swap(figure);
 	return *this;
 }
+
 void Figure3D::swap(Figure3D& rhs) noexcept{
 	std::swap(type, rhs.type);
 	std::swap(radius, rhs.radius);
@@ -57,11 +114,9 @@ double Figure3D::get_radius() { return radius; }
 double Figure3D::get_height() { return height; }
 double Figure3D::get_lenght() { return lenght; }
 FigureType Figure3D::get_type() { return type; }
-
 //-----------------------------------
 
 // определение класса Space -------
-
 Space::Space() : figures(nullptr), size(0) {} // Конструктор по умолчанию
 Space::Space(const Space& space) {
 	this->size = space.size;
@@ -94,6 +149,7 @@ Space& Space::operator=(Space space) {
 	swap(space);
 	return *this;
 }
+
 Figure3D& Space::get_figure_with_max_volume() {
 	int max = 0;
 	int index_max = 0;
@@ -119,21 +175,28 @@ void Space::add_figure(Figure3D figure, int index) {
 		figures_tmp[i] = new Figure3D(*figures[i]);
 	}
 
-	figures_tmp[index] = new Figure3D(figure);
-
 	for (int i = size - 1; i > index; i--) {
-		figures[i] = new Figure3D(*figures[i - 1]);
+		figures_tmp[i] = new Figure3D(*figures[i - 1]);
 	}
+
+	figures_tmp[index] = new Figure3D(figure);
 
 	std::swap(figures, figures_tmp);
 }
 void Space::delete_figure(int index) {
-	if (index >= size || index < 0) throw std::runtime_error("Invalid index");
-	for (int i = index; i < size; ++i) {
-		figures[i] = figures[i + 1];
+	if (index < 0 || index > size) throw std::runtime_error("Invalid index");
+	--size;
+	Figure3D** figures_tmp = new Figure3D * [size]();
+
+	for (int i = 0; i < index; ++i) {
+		figures_tmp[i] = new Figure3D(*figures[i]);
 	}
-	size--;
+
+	for (int i = index; i < size; ++i) {
+		figures_tmp[i] = new Figure3D(*figures[i + 1]);
+	}
+
+	std::swap(figures, figures_tmp);
 }
 int Space::get_size() { return size; }
-
 //-----------------------------------

@@ -1,8 +1,10 @@
 #pragma once
+#include <iostream>
 enum  FigureType
 {
 	BALL, CYLINDER, PARALLELEPIPED
 };
+
 
 class Figure3D {
 	FigureType type;
@@ -47,3 +49,6 @@ public:
 	void delete_figure(int);
 	int get_size();
 };
+
+std::ostream& operator<<(std::ostream& stream, Space& space);
+std::ostream& operator<<(std::ostream& stream, Figure3D& figure);
