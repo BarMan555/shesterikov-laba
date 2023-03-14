@@ -50,5 +50,5 @@ public:
 	int get_size();
 };
 
-std::ostream& operator<<(std::ostream& stream, Space& space);
-std::ostream& operator<<(std::ostream& stream, Figure3D& figure);
+	std::ostream& operator<<(std::ostream& stream, Space& space);
+    std::ostream& operator<<(std::ostream& stream, Figure3D& figure);

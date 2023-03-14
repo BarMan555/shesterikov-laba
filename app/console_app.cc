@@ -26,6 +26,23 @@ int menu1(Space space) {
 
 }
 
+void exit() {
+	while (true) {
+		int key = get_key();
+		if (key == 27) break;
+	}
+}
+
+bool check_size(Space& space) {
+	if (space.get_size() == 0) {
+		cout << "We don't have figures!" << endl;
+		cout << "\nExit: Esc";
+		exit();
+		return true;
+	}
+	return false;
+}
+
 int main() {
 	Space space;
 	while (true) {
@@ -155,15 +172,7 @@ int main() {
 
 		if (key == 83) {
 			system("cls");
-			if (space.get_size() == 0) {
-				cout << "We don't have figures!" << endl;
-				cout << "\nExit: Esc";
-				while (true) {
-					int key = get_key();
-					if (key == 27) break;
-				}
-				continue;
-			}
+			if (check_size(space)) continue;
 			int index;
 			while (true) {
 				cout << "Range of index: 0 - " << space.get_size() - 1 << endl;
@@ -176,50 +185,25 @@ int main() {
 			space.delete_figure(index);
 			system("cls");
 			cout << "Figure deleted!" << endl << "Exit: Esc";
-			while (true) {
-				int key = get_key();
-				if (key == 27) break;
-			}
+			exit();
 		}
 
 		if (key == 13) {
 			system("cls");
-			if (space.get_size() == 0) {
-				cout << "We don't have figures!" << endl;
-				cout << "\nExit: Esc";
-				while (true) {
-					int key = get_key();
-					if (key == 27) break;
-				}
-				continue;
-			}
+			if (check_size(space)) continue;
 			cout << "Exit: Esc\n\n";
 			cout << space;
-			while (true) {
-				int key = get_key();
-				if (key == 27) break;
-			}
+			exit();
 		}
 
 		if(key == 32){
 			system("cls");
-			if (space.get_size() == 0) {
-				cout << "We don't have figures!" << endl;
-				cout << "\nExit: Esc";
-				while (true) {
-					int key = get_key();
-					if (key == 27) break;
-				}
-				continue;
-			}
+			if (check_size(space)) continue;
 			cout << "Figure with max volume:" << endl;
 			cout << space.get_figure_with_max_volume();
 			cout << "\tVolume: " << space.get_figure_with_max_volume().get_volume_figure() << endl;
 			cout << "\nExit: Esc";
-			while (true) {
-				int key = get_key();
-				if (key == 27) break;
-			}
+			exit();
 		}
 
 		if (key == 27) { break; }
