@@ -1,6 +1,5 @@
-#include "functions/figures3d.h"
+#include "functions/figures3d.h"  // include #include <iostream>
 #include <conio.h>
-#include <iostream>
 
 using namespace std;
 
@@ -10,6 +9,7 @@ int get_key() {
 	return key;
 }
 
+// Menu of programm 
 int menu1(Space space) {
 	system("cls");
 	cout << "Number of figures in space: " << space.get_size() << endl << endl;
@@ -26,6 +26,7 @@ int menu1(Space space) {
 
 }
 
+// Function of Exit
 void exit() {
 	while (true) {
 		int key = get_key();
@@ -33,6 +34,7 @@ void exit() {
 	}
 }
 
+// Function Check number of figures in space
 bool check_size(Space& space) {
 	if (space.get_size() == 0) {
 		cout << "We don't have figures!" << endl;
@@ -48,6 +50,7 @@ int main() {
 	while (true) {
 		int key = menu1(space);
 
+		// Ins 
 		if (key == 82) {
 			system("cls");
 			int index;
@@ -167,9 +170,10 @@ int main() {
 				break;
 			}
 			Figure3D figure(type, radius, height, lenght);
-			space.add_figure(figure, index);
+			space.add_figure(figure, index); // Add the figure in space
 		}
 
+		// Del
 		if (key == 83) {
 			system("cls");
 			if (check_size(space)) continue;
@@ -182,12 +186,13 @@ int main() {
 				system("cls");
 				cout << "Invalid index!\n  Try again\n*------------*\n";
 			}
-			space.delete_figure(index);
+			space.delete_figure(index); // Delete the figure in space
 			system("cls");
 			cout << "Figure deleted!" << endl << "Exit: Esc";
 			exit();
 		}
 
+		// Enter
 		if (key == 13) {
 			system("cls");
 			if (check_size(space)) continue;
@@ -196,6 +201,7 @@ int main() {
 			exit();
 		}
 
+		// Space
 		if(key == 32){
 			system("cls");
 			if (check_size(space)) continue;
@@ -206,6 +212,7 @@ int main() {
 			exit();
 		}
 
+		// Escape
 		if (key == 27) { break; }
 	}
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+
 enum  FigureType
 {
 	BALL, CYLINDER, PARALLELEPIPED
