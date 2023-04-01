@@ -3,36 +3,6 @@
 #include <cmath>
 #define PI 3.1415
 
-std::ostream& operator<<(std::ostream& stream, Space& space) {
-	for (int i = 0; i < space.get_size(); ++i) {
-		stream << "Figure #" << i << "\n\tType of Figure: "; 
-		switch (space[i].get_type()) {
-		case 0:
-			stream << "Ball\n";
-			break;
-		case 1:
-			stream << "Cylinder\n";
-			break;
-		case 2:
-			stream << "Parallelepiped\n";
-		}
-		
-		switch (space[i].get_type()) {
-		case BALL:
-			stream << "\tRadius: " << space[i].get_radius() << std::endl;
-			break;
-		case CYLINDER:
-			stream << "\tRadius: " << space[i].get_radius() << "\n\tHeight: " << space[i].get_height() << std::endl;
-			break;
-		case PARALLELEPIPED:
-			stream << "\tFirst line: " << space[i].get_radius() << "\n\tSecond line: " <<
-				space[i].get_height() << "\n\tThird line: " << space[i].get_lenght() << std::endl;
-			break;
-		}
-		stream << std::endl;
-	}
-	return stream;
-}
 std::ostream& operator<<(std::ostream& stream, Figure3D& figure) {
 	stream << "\tType of Figure: ";
 	switch (figure.get_type()) {
@@ -57,6 +27,12 @@ std::ostream& operator<<(std::ostream& stream, Figure3D& figure) {
 		stream << "\tFirst line: " << figure.get_radius() << "\n\tSecond line: " <<
 			figure.get_height() << "\n\tThird line: " << figure.get_lenght() << std::endl;
 		break;
+	}
+	return stream;
+}
+std::ostream& operator<<(std::ostream& stream, Space& space) {
+	for (int i = 0; i < space.get_size(); ++i) {
+		stream << space[i] << "\n";
 	}
 	return stream;
 }

@@ -69,7 +69,7 @@ int main() {
 				cout << "List of figures:\nBALL - 0\nCYLINDER - 1\nPARALLELEPIPED - 2\n-----------\nWrite type of figure: ";
 				cin >> index_type;
 				switch (index_type) {
-				case 0:
+				case 0: 
 					type = BALL;
 					break;
 				case 1:
