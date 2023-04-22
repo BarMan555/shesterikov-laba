@@ -1,35 +1,9 @@
 #include "functions/figures3d.h"
 #include <stdexcept>
 #include <cmath>
+
 #define PI 3.1415
 
-std::ostream& operator<<(std::ostream& stream, Figure3D& figure) {
-	stream << "\tType of Figure: ";
-	switch (figure.get_type()) {
-	case 0:
-		stream << "Ball\n";
-		break;
-	case 1:
-		stream << "Cylinder\n";
-		break;
-	case 2:
-		stream << "Parallelepiped\n";
-	}
-
-	switch (figure.get_type()) {
-	case BALL:
-		stream << "\tRadius: " << figure.get_radius() << std::endl;
-		break;
-	case CYLINDER:
-		stream << "\tRadius: " << figure.get_radius() << "\n\tHeight: " << figure.get_height() << std::endl;
-		break;
-	case PARALLELEPIPED:
-		stream << "\tFirst line: " << figure.get_radius() << "\n\tSecond line: " <<
-			figure.get_height() << "\n\tThird line: " << figure.get_lenght() << std::endl;
-		break;
-	}
-	return stream;
-}
 std::ostream& operator<<(std::ostream& stream, Space& space) {
 	for (int i = 0; i < space.get_size(); ++i) {
 		stream << space[i] << "\n";
@@ -37,101 +11,138 @@ std::ostream& operator<<(std::ostream& stream, Space& space) {
 	return stream;
 }
 
-// определение класса Figure3D -------
-Figure3D::Figure3D() : type(BALL), radius(0), height(0), lenght(0) {}
-Figure3D::Figure3D(Figure3D& fig){
-	type = fig.get_type();
-	radius = fig.get_radius();
-	height = fig.get_height();
-	lenght = fig.get_lenght();
-}
-Figure3D::Figure3D(FigureType type, double radius) : type(type), radius(radius), height(0), lenght(0) {}
-Figure3D::Figure3D(FigureType type, double radius, double height) : type(type), radius(radius), height(height), lenght(0) {}
-Figure3D::Figure3D(FigureType type, double a, double b, double c) : type(type), radius(a), height(b), lenght(c) {}
 
-Figure3D& Figure3D::operator=(Figure3D figure) {
-	swap(figure);
+
+
+
+// Figure3D //
+
+Figure3D::Figure3D() : radius(0), height(0), lenght(0) {}
+Figure3D::Figure3D(double r) : radius(r) {};
+Figure3D::Figure3D(double r, double h) : radius(r), height(h) {};
+Figure3D::Figure3D(double r, double h, double l) : radius(r), height(h), lenght(l) {};
+
+void Figure3D::swap(Figure3D& fig) {
+	std::swap(radius, fig.radius);
+	std::swap(height, fig.height);
+	std::swap(lenght, fig.lenght);
+}
+
+//---------//
+
+
+
+
+
+
+// BALL //
+BALL::BALL() : Figure3D() {}
+BALL::BALL(double radius) : Figure3D(radius){}
+BALL::BALL(const BALL& fig) : Figure3D(fig) {}
+
+BALL& BALL::operator=(BALL fig) {
+	swap(fig);
 	return *this;
 }
 
-void Figure3D::swap(Figure3D& rhs) noexcept{
-	std::swap(type, rhs.type);
-	std::swap(radius, rhs.radius);
-	std::swap(height, rhs.height);
-	std::swap(lenght, rhs.lenght);
+double BALL::get_square_figure() const{ return 4 * PI * pow(radius, 2); }
+double BALL::get_volume_figure() const{ return (4. / 3) * (PI * pow(radius, 3)); }
+void BALL::print(std::ostream& stream) const{
+	stream << "\tType of Figure: BALL" << std::endl; 
+	stream << "\tRadius: " << this->radius << std::endl;
 }
-double Figure3D::get_square_figure() {
-	switch (type)
-	{
-	case BALL: return 4 * PI * pow(radius, 2);
-		break;
-	case CYLINDER: return 2 * PI * radius * (radius + height);
-		break;
-	case PARALLELEPIPED: return 2 * (radius * height + radius * lenght + height * lenght);
-		break;
-	default: throw std::runtime_error("Invalid type");
-		break;
-	}
+FigurePtr BALL::clone() const{
+	FigurePtr ptr = std::make_shared<BALL>(new BALL(*this));
+	return ptr;
 }
-double Figure3D::get_volume_figure() {
-	switch (type)
-	{
-	case BALL: return (4. / 3) * (PI * pow(radius, 3));
-		break;
-	case CYLINDER: return PI * pow(radius, 2) * height;
-		break;
-	case PARALLELEPIPED: return radius * height * lenght;
-		break;
-	default: throw std::runtime_error("Invalid type");
-		break;
-	}
+//-----//
+
+
+
+
+// CYLINDER //
+CYLINDER::CYLINDER(): Figure3D() {}
+CYLINDER::CYLINDER(double radius, double height) : Figure3D(radius, height) {}
+CYLINDER::CYLINDER(const CYLINDER& fig) : Figure3D(fig) {}
+
+CYLINDER& CYLINDER::operator=(CYLINDER fig) {
+	swap(fig);
+	return *this;
 }
-double Figure3D::get_radius() { return radius; }
-double Figure3D::get_height() { return height; }
-double Figure3D::get_lenght() { return lenght; }
-FigureType Figure3D::get_type() { return type; }
-//-----------------------------------
+
+double CYLINDER::get_square_figure() const { return 2 * PI * radius * (radius + height); }
+double CYLINDER::get_volume_figure() const { return PI * pow(radius, 2) * height; }
+void CYLINDER::print(std::ostream& stream) const {
+	stream << "\tType of Figure: CYLINDER" << std::endl;
+	stream << "\tRadius: " << this->radius << std::endl;
+	stream << "\tHeight: " << this->height << std::endl;
+}
+FigurePtr CYLINDER::clone() const {
+	FigurePtr ptr = std::make_shared<CYLINDER>(new CYLINDER(*this));
+	return ptr;
+}
+//---------//
+
+
+
+
+// PARALLELEPIPED //
+PARALLELEPIPED::PARALLELEPIPED() : Figure3D() {}
+PARALLELEPIPED::PARALLELEPIPED(double radius, double hegiht, double lenght) : Figure3D(radius, height, lenght) {}
+PARALLELEPIPED::PARALLELEPIPED(const PARALLELEPIPED& fig) : Figure3D(fig) {}
+
+PARALLELEPIPED& PARALLELEPIPED::operator=(PARALLELEPIPED fig) {
+	swap(fig);
+	return *this;
+}
+
+double PARALLELEPIPED::get_square_figure() const { return 2 * (radius * height+ radius* lenght+ height* lenght); }
+double PARALLELEPIPED::get_volume_figure() const { return radius * height* lenght; }
+void PARALLELEPIPED::print(std::ostream& stream) const {
+	stream << "\tType of Figure: PARALLELEPIPED" << std::endl;
+	stream << "\t1st side: " << this->radius << std::endl;
+	stream << "\t2nd side: " << this->height << std::endl;
+	stream << "\t3rd side: " << this->lenght << std::endl;
+}
+FigurePtr PARALLELEPIPED::clone() const {
+	FigurePtr ptr = std::make_shared<PARALLELEPIPED>(new PARALLELEPIPED(*this));
+	return ptr;
+}
+//---------//
+
+
+
+
 
 // определение класса Space -------
-Space::Space() : figures(nullptr), size(0) {} // Конструктор по умолчанию
 Space::Space(const Space& space) {
-	this->size = space.size;
-	this->figures = new Figure3D * [size]();
-	for (int i = 0; i < size; ++i) {
-		this->figures[i] = new Figure3D(space[i].get_type(), space[i].get_radius(),
-			space[i].get_height(), space[i].get_lenght());
+	this->figures.resize(space.figures.size());
+	for (int i = 0; i < space.figures.size(); ++i) {
+		this->figures[i] = space.figures[i];
 	}
 }
-Space::~Space() {
-	for (int i = 0; i < size; ++i) {
-		delete figures[i];
+Space& Space::operator=(const Space& space) {
+	this->figures.clear();
+	this->figures.resize(space.figures.size());
+	for (int i = 0; i < space.figures.size(); ++i) {
+		this->figures[i] = space.figures[i];
 	}
-	delete[] figures;
+	return *this;
 }
 
-Figure3D Space::operator[](int index) const {
-	if (index < 0 || index >= size) {
+FigurePtr Space::operator[](int index) {
+	if (index < 0 || index >= figures.size()) {
 		throw std::runtime_error("Invalid index");
 	}
-	return *figures[index];
-}
-Figure3D& Space::operator[](int index) {
-	if (index < 0 || index >= size) {
-		throw std::runtime_error("Invalid index");
-	}
-	return *figures[index];
-}
-Space& Space::operator=(Space space) {
-	swap(space);
-	return *this;
+	return figures[index];
 }
 
 Figure3D& Space::get_figure_with_max_volume() {
 	int max = 0;
 	int index_max = 0;
-	for (int i = 0; i < size; ++i) {
-		if ((*this)[i].get_volume_figure() > max) {
-			max = (*this)[i].get_volume_figure();
+	for (int i = 0; i < figures.size(); ++i) {
+		if (figures[i].get()->get_volume_fugure() > max) {
+			max = this[i].get()->get_volume_figure();
 			index_max = i;
 		}
 	}
@@ -139,25 +150,12 @@ Figure3D& Space::get_figure_with_max_volume() {
 }
 void Space::swap(Space& rhs) noexcept {
 	std::swap(figures, rhs.figures);
-	std::swap(size, rhs.size);
 }
-void Space::add_figure(Figure3D figure, int index) {
-	if (index < 0 || index > size) throw std::runtime_error("Invalid index");
-	++size;
+void Space::add_figure(const Figure3D& fig, int index) {
+	if (index < 0 || index > figures.size()) throw std::runtime_error("Invalid index");
 	
-	Figure3D** figures_tmp = new Figure3D * [size]();
-
-	for (int i = 0; i < index; ++i) {
-		figures_tmp[i] = new Figure3D(*figures[i]);
-	}
-
-	for (int i = size - 1; i > index; i--) {
-		figures_tmp[i] = new Figure3D(*figures[i - 1]);
-	}
-
-	figures_tmp[index] = new Figure3D(figure);
-
-	std::swap(figures, figures_tmp);
+	auto tmp = std::make_shared<Figure3D>(fig);
+	figures.insert(figures.begin()+index, tmp);
 }
 void Space::delete_figure(int index) {
 	if (index < 0 || index > size) throw std::runtime_error("Invalid index");
@@ -174,5 +172,5 @@ void Space::delete_figure(int index) {
 
 	std::swap(figures, figures_tmp);
 }
-int Space::get_size() { return size; }
+int Space::get_size() { return figures.size(); }
 //-----------------------------------

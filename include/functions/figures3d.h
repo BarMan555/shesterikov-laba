@@ -1,52 +1,88 @@
 #pragma once
 #include <iostream>
+#include <memory>
+#include <vector>
 
-enum  FigureType
-{
-	BALL, CYLINDER, PARALLELEPIPED
-};
-
+using FigurePtr = std::shared_ptr<Figure3D>;
 
 class Figure3D {
-	FigureType type;
+protected:
 	double radius;
 	double height;
 	double lenght;
 
-public:
 	Figure3D();
-	Figure3D(Figure3D&);
-	Figure3D(FigureType, double);
-	Figure3D(FigureType, double, double);
-	Figure3D(FigureType, double, double, double);
+	Figure3D(double);
+	Figure3D(double, double);
+	Figure3D(double, double, double);
+	Figure3D(const Figure3D&) = default;
+	Figure3D& operator=(const Figure3D&) = default;
 
-	Figure3D& operator=(Figure3D);
-	
-	void swap(Figure3D&) noexcept;
-	double get_square_figure();
-	double get_volume_figure();
-	double get_radius();
-	double get_height();
-	double get_lenght();
-	FigureType get_type();
+public:
+	virtual ~Figure3D() = default;
+	virtual FigurePtr clone() const = 0; // Method of clone
+	virtual void print(std::ostream&) const = 0; // Print info of figure
+	virtual double get_square_figure() const = 0;
+	virtual double get_volume_figure() const = 0;
+	void swap(Figure3D&);
 };
 
+class BALL : public Figure3D {
+public:
+	BALL();
+	BALL(double);
+	BALL(const BALL&);
+
+	BALL& operator=(BALL);
+	FigurePtr clone() const override;
+	
+	void print(std::ostream&) const override;
+	double get_square_figure() const override;
+	double get_volume_figure() const override;
+};
+
+class CYLINDER : public Figure3D {
+public:
+	CYLINDER();
+	CYLINDER(double, double);
+	CYLINDER(const CYLINDER&);
+	
+	CYLINDER& operator=(CYLINDER);
+	FigurePtr clone() const override;
+
+	void print(std::ostream&) const override;
+	double get_square_figure() const override;
+	double get_volume_figure() const override;
+};
+
+class PARALLELEPIPED : public Figure3D {
+public:
+	PARALLELEPIPED();
+	PARALLELEPIPED(double, double, double);
+	PARALLELEPIPED(const PARALLELEPIPED&);
+
+	PARALLELEPIPED& operator=(PARALLELEPIPED);
+	FigurePtr clone() const override;
+
+	void print(std::ostream&) const override;
+	double get_square_figure() const override;
+	double get_volume_figure() const override;
+};
+
+
 class Space {
-	Figure3D** figures;
-	int size;
+	std::vector<FigurePtr> figures;
 
 public:
-	Space();
+	Space() = default;
 	Space(const Space&);
-	~Space();
 
-	Figure3D operator[](int) const;
-	Figure3D& operator[](int);
-	Space& operator=(Space);
+	FigurePtr operator[](int);
+	Space& operator=(const Space&);
 
 	Figure3D& get_figure_with_max_volume();
 	void swap(Space&) noexcept;
-	void add_figure(Figure3D, int);
+	void add_figure(const Figure3D&, int);
 	void delete_figure(int);
 	int get_size();
 };
