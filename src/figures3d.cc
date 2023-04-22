@@ -4,6 +4,8 @@
 
 #define PI 3.1415
 
+
+
 std::ostream& operator<<(std::ostream& stream, Space& space) {
 	for (int i = 0; i < space.get_size(); ++i) {
 		stream << space[i] << "\n";
@@ -18,9 +20,9 @@ std::ostream& operator<<(std::ostream& stream, Space& space) {
 // Figure3D //
 
 Figure3D::Figure3D() : radius(0), height(0), lenght(0) {}
-Figure3D::Figure3D(double r) : radius(r) {};
-Figure3D::Figure3D(double r, double h) : radius(r), height(h) {};
-Figure3D::Figure3D(double r, double h, double l) : radius(r), height(h), lenght(l) {};
+Figure3D::Figure3D(double r) : radius(r), height(0), lenght(0) {};
+Figure3D::Figure3D(double r, double h) : Figure3D(r) { height = h; };
+Figure3D::Figure3D(double r, double h, double l) : Figure3D(r, h) { lenght = l; };
 
 void Figure3D::swap(Figure3D& fig) {
 	std::swap(radius, fig.radius);
@@ -33,15 +35,13 @@ void Figure3D::swap(Figure3D& fig) {
 
 
 
-
-
 // BALL //
 BALL::BALL() : Figure3D() {}
 BALL::BALL(double radius) : Figure3D(radius){}
 BALL::BALL(const BALL& fig) : Figure3D(fig) {}
 
 BALL& BALL::operator=(BALL fig) {
-	swap(fig);
+	this->swap(fig);
 	return *this;
 }
 
@@ -51,9 +51,8 @@ void BALL::print(std::ostream& stream) const{
 	stream << "\tType of Figure: BALL" << std::endl; 
 	stream << "\tRadius: " << this->radius << std::endl;
 }
-FigurePtr BALL::clone() const{
-	FigurePtr ptr = std::make_shared<BALL>(new BALL(*this));
-	return ptr;
+std::unique_ptr<Figure3D> BALL::clone() const{
+	return std::make_unique<Figure3D>(new BALL(*this));
 }
 //-----//
 
@@ -77,12 +76,10 @@ void CYLINDER::print(std::ostream& stream) const {
 	stream << "\tRadius: " << this->radius << std::endl;
 	stream << "\tHeight: " << this->height << std::endl;
 }
-FigurePtr CYLINDER::clone() const {
-	FigurePtr ptr = std::make_shared<CYLINDER>(new CYLINDER(*this));
-	return ptr;
+std::unique_ptr<Figure3D> CYLINDER::clone() const {
+	return std::make_unique<Figure3D>(new CYLINDER(*this));
 }
 //---------//
-
 
 
 
@@ -104,9 +101,8 @@ void PARALLELEPIPED::print(std::ostream& stream) const {
 	stream << "\t2nd side: " << this->height << std::endl;
 	stream << "\t3rd side: " << this->lenght << std::endl;
 }
-FigurePtr PARALLELEPIPED::clone() const {
-	FigurePtr ptr = std::make_shared<PARALLELEPIPED>(new PARALLELEPIPED(*this));
-	return ptr;
+std::unique_ptr<Figure3D> PARALLELEPIPED::clone() const {
+	return std::make_unique<Figure3D>(new PARALLELEPIPED(*this));
 }
 //---------//
 
@@ -130,7 +126,7 @@ Space& Space::operator=(const Space& space) {
 	return *this;
 }
 
-FigurePtr Space::operator[](int index) {
+FigurePtr Space::operator[](int index){
 	if (index < 0 || index >= figures.size()) {
 		throw std::runtime_error("Invalid index");
 	}
@@ -141,12 +137,12 @@ Figure3D& Space::get_figure_with_max_volume() {
 	int max = 0;
 	int index_max = 0;
 	for (int i = 0; i < figures.size(); ++i) {
-		if (figures[i].get()->get_volume_fugure() > max) {
-			max = this[i].get()->get_volume_figure();
+		if (figures[i]->get_volume_figure() > max) {
+			max = figures[i]->get_volume_figure();
 			index_max = i;
 		}
 	}
-	return (*this)[index_max];
+	return *(figures[index_max]);
 }
 void Space::swap(Space& rhs) noexcept {
 	std::swap(figures, rhs.figures);
@@ -158,19 +154,9 @@ void Space::add_figure(const Figure3D& fig, int index) {
 	figures.insert(figures.begin()+index, tmp);
 }
 void Space::delete_figure(int index) {
-	if (index < 0 || index > size) throw std::runtime_error("Invalid index");
-	--size;
-	Figure3D** figures_tmp = new Figure3D * [size]();
+	if (index < 0 || index > figures.size()) throw std::runtime_error("Invalid index");
 
-	for (int i = 0; i < index; ++i) {
-		figures_tmp[i] = new Figure3D(*figures[i]);
-	}
-
-	for (int i = index; i < size; ++i) {
-		figures_tmp[i] = new Figure3D(*figures[i + 1]);
-	}
-
-	std::swap(figures, figures_tmp);
+	figures.erase(figures.begin() + index);
 }
 int Space::get_size() { return figures.size(); }
 //-----------------------------------
