@@ -158,5 +158,5 @@ void Space::delete_figure(int index) {
 
 	figures.erase(figures.begin() + index);
 }
-int Space::get_size() { return figures.size(); }
+size_t Space::get_size() { return figures.size(); }
 //-----------------------------------

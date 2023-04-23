@@ -2,8 +2,9 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#define FigurePtr std::shared_ptr<Figure3D>
 
-using FigurePtr = std::shared_ptr<Figure3D>;
+//using FigurePtr = std::shared_ptr<Figure3D>;
 
 class Figure3D {
 protected:
@@ -20,7 +21,7 @@ protected:
 
 public:
 	virtual ~Figure3D() = default;
-	virtual FigurePtr clone() const = 0; // Method of clone
+	virtual std::unique_ptr<Figure3D> clone() const = 0; // Method of clone
 	virtual void print(std::ostream&) const = 0; // Print info of figure
 	virtual double get_square_figure() const = 0;
 	virtual double get_volume_figure() const = 0;
@@ -34,7 +35,7 @@ public:
 	BALL(const BALL&);
 
 	BALL& operator=(BALL);
-	FigurePtr clone() const override;
+	std::unique_ptr<Figure3D> clone() const override;
 	
 	void print(std::ostream&) const override;
 	double get_square_figure() const override;
@@ -48,7 +49,7 @@ public:
 	CYLINDER(const CYLINDER&);
 	
 	CYLINDER& operator=(CYLINDER);
-	FigurePtr clone() const override;
+	std::unique_ptr<Figure3D> clone() const override;
 
 	void print(std::ostream&) const override;
 	double get_square_figure() const override;
@@ -62,7 +63,7 @@ public:
 	PARALLELEPIPED(const PARALLELEPIPED&);
 
 	PARALLELEPIPED& operator=(PARALLELEPIPED);
-	FigurePtr clone() const override;
+	std::unique_ptr<Figure3D> clone() const override;
 
 	void print(std::ostream&) const override;
 	double get_square_figure() const override;
@@ -84,7 +85,7 @@ public:
 	void swap(Space&) noexcept;
 	void add_figure(const Figure3D&, int);
 	void delete_figure(int);
-	int get_size();
+	size_t get_size();
 };
 
 std::ostream& operator<<(std::ostream& stream, Space& space);

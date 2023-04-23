@@ -63,22 +63,11 @@ int main() {
 				cout << "Invalid index!\n  Try again\n*------------*\n";
 			}
 			system("cls");
-			FigureType type;
 			int index_type;
 			while (true) {
 				cout << "List of figures:\nBALL - 0\nCYLINDER - 1\nPARALLELEPIPED - 2\n-----------\nWrite type of figure: ";
 				cin >> index_type;
-				switch (index_type) {
-				case 0: 
-					type = BALL;
-					break;
-				case 1:
-					type = CYLINDER;
-					break;
-				case 2:
-					type = PARALLELEPIPED;
-					break;
-				default:
+				if (index_type != 0 && index_type != 1 && index_type != 2){
 					system("cls");
 					cout << "Invalid type!\n  Try again\n*------------*\n";
 					continue;
@@ -86,11 +75,12 @@ int main() {
 				break;
 			}
 			system("cls");
+			Figure3D* fig = nullptr;
 			double radius = 0;
 			double height = 0;
 			double lenght = 0;
-			switch (type) {
-			case BALL:
+			switch (index_type) {
+			case 1:
 
 				while (true) {
 					cout << "Write radius: ";
@@ -103,8 +93,9 @@ int main() {
 						continue;
 					}
 				}
+				fig = new BALL(radius);
 				break;
-			case CYLINDER:
+			case 2:
 				while (true)
 				{
 					cout << "Write radius: ";
@@ -129,8 +120,9 @@ int main() {
 						continue;
 					}
 				}
+				fig = new CYLINDER(radius, height);
 				break;
-			case PARALLELEPIPED:
+			case 3:
 				while (true)
 				{
 					cout << "Write first line: ";
@@ -167,10 +159,12 @@ int main() {
 						continue;
 					}
 				}
+				fig = new PARALLELEPIPED(radius, height, lenght);
 				break;
+			default:
+				fig = new BALL(0);
 			}
-			Figure3D figure(type, radius, height, lenght);
-			space.add_figure(figure, index); // Add the figure in space
+			space.add_figure(*fig, index); // Add the figure in space
 		}
 
 		// Del
@@ -206,7 +200,7 @@ int main() {
 			system("cls");
 			if (check_size(space)) continue;
 			cout << "Figure with max volume:" << endl;
-			cout << space.get_figure_with_max_volume();
+			space.get_figure_with_max_volume().print(cout);
 			cout << "\tVolume: " << space.get_figure_with_max_volume().get_volume_figure() << endl;
 			cout << "\nExit: Esc";
 			exit();
@@ -215,6 +209,5 @@ int main() {
 		// Escape
 		if (key == 27) { break; }
 	}
-
 	return 0;
 }

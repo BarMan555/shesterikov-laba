@@ -32,5 +32,5 @@ add_executable(figures3d_tests "tests/figures3d_tests.cc")
 target_link_libraries(figures3d_tests figures3d GTest::gtest_main)
 
 # Объявляем консольное приложение
-add_executable(App "app/console_app.cc")
-target_link_libraries(App figures3d)
+add_executable(console_app "app/console_app.cc")
+target_link_libraries(console_app figures3d)
