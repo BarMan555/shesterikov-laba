@@ -48,8 +48,8 @@ TEST(SpaceTest, Space_Add) {
     Space space;
     Figure* figure1 = new BALL(3);
     Figure* figure2 = new PARALLELEPIPED(2, 2, 2);
-    space.add_figure(*figure1, 0);
-    space.add_figure(*figure2, 1);
+    space.add_figure(figure1->clone(), 0);
+    space.add_figure(figure2->clone(), 1);
     EXPECT_NEAR(space[0]->get_square_figure(), 113.094, 0.01);
     EXPECT_NEAR(space[1]->get_volume_figure(), 8, 0.01);
 }
@@ -60,9 +60,9 @@ TEST(SpaceTest, Space_Delete1) {
     Figure* figure1 = new BALL(1);
     Figure* figure2 = new CYLINDER(2, 4);
     Figure* figure3 = new PARALLELEPIPED(1, 5, 7);
-    space.add_figure(*figure1, 0);
-    space.add_figure(*figure2, 1);
-    space.add_figure(*figure3, 2);
+    space.add_figure(figure1->clone(), 0);
+    space.add_figure(figure2->clone(), 1);
+    space.add_figure(figure3->clone(), 2);
 
     space.delete_figure(1);
     EXPECT_NEAR(space[1]->get_volume_figure(), 35, 0.01);
@@ -74,9 +74,9 @@ TEST(SpaceTest, Space_Delete2) {
     Figure* figure1 = new BALL(1);
     Figure* figure2 = new CYLINDER(2, 4);
     Figure* figure3 = new PARALLELEPIPED(1, 5, 7);
-    space.add_figure(*figure1, 0);
-    space.add_figure(*figure2, 1);
-    space.add_figure(*figure3, 2);
+    space.add_figure(figure1->clone(), 0);
+    space.add_figure(figure2->clone(), 1);
+    space.add_figure(figure3->clone(), 2);
 
     space.delete_figure(0);
     EXPECT_NEAR(space[1]->get_volume_figure(), 35, 0.01);
@@ -88,9 +88,9 @@ TEST(SpaceTest, Figure_Max_Volume_Test) {
     Figure* figure1 = new BALL(10); // 4188.666
     Figure* figure2 = new CYLINDER(5, 10); // 785.375
     Figure* figure3 = new PARALLELEPIPED(3, 4, 5); //60
-    space.add_figure(*figure1, 0);
-    space.add_figure(*figure2, 1);
-    space.add_figure(*figure3, 2);
+    space.add_figure(figure1->clone(), 0);
+    space.add_figure(figure2->clone(), 1);
+    space.add_figure(figure3->clone(), 2);
 
-    EXPECT_NEAR(space.get_figure_with_max_volume()->get_volume_figure(), 4188.666, 0.01);
+    EXPECT_NEAR(space[space.get_figure_with_max_volume()]->get_volume_figure(), 4188.666, 0.01);
 }

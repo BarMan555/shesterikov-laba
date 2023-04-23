@@ -65,9 +65,9 @@ int main() {
 			system("cls");
 			int index_type;
 			while (true) {
-				cout << "List of figures:\nBALL - 0\nCYLINDER - 1\nPARALLELEPIPED - 2\n-----------\nWrite type of figure: ";
+				cout << "List of figures:\nBALL - 1\nCYLINDER - 2\nPARALLELEPIPED - 3\n-----------\nWrite type of figure: ";
 				cin >> index_type;
-				if (index_type != 0 && index_type != 1 && index_type != 2){
+				if (index_type != 1 && index_type != 2 && index_type != 3){
 					system("cls");
 					cout << "Invalid type!\n  Try again\n*------------*\n";
 					continue;
@@ -164,7 +164,7 @@ int main() {
 			default:
 				fig = new BALL(0);
 			}
-			space.add_figure(*fig, index); // Add the figure in space
+			space.add_figure(fig->clone(), index); // Add the figure in space
 		}
 
 		// Del
@@ -191,7 +191,10 @@ int main() {
 			system("cls");
 			if (check_size(space)) continue;
 			cout << "Exit: Esc\n\n";
-			cout << space;
+			for (int i = 0; i < space.get_size(); ++i) {
+				space.print_figures(i);
+				cout << endl;
+			}
 			exit();
 		}
 
@@ -199,9 +202,10 @@ int main() {
 		if(key == 32){
 			system("cls");
 			if (check_size(space)) continue;
+			int index = space.get_figure_with_max_volume();
 			cout << "Figure with max volume:" << endl;
-			space.get_figure_with_max_volume().print(cout);
-			cout << "\tVolume: " << space.get_figure_with_max_volume().get_volume_figure() << endl;
+			space[index]->print(cout);
+			cout << "\tVolume: " << space[index]->get_volume_figure() << endl;
 			cout << "\nExit: Esc";
 			exit();
 		}
