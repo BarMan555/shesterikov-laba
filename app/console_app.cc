@@ -75,7 +75,7 @@ int main() {
 				break;
 			}
 			system("cls");
-			Figure3D* fig = nullptr;
+			Figure* fig = nullptr;
 			double radius = 0;
 			double height = 0;
 			double lenght = 0;

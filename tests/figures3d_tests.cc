@@ -3,37 +3,37 @@
 
 // TEST 3
 TEST(Figure3dTest, FigureSquare_BALL) {
-    Figure3D* figure = new BALL(2);
+    Figure* figure = new BALL(2);
     EXPECT_NEAR(figure->get_square_figure(), 50.264, 0.01);
 }
 
 // TEST 4
 TEST(Figure3dTest, FigureVolume_BALL) {
-    Figure3D* figure = new BALL(2);
+    Figure* figure = new BALL(2);
     EXPECT_NEAR(figure->get_volume_figure(), 33.509, 0.01);
 }
 
 // TEST 5
 TEST(Figure3dTest, FigureSquare_CYLINDER) {
-    Figure3D* figure = new CYLINDER(1, 4);
+    Figure* figure = new CYLINDER(1, 4);
     EXPECT_NEAR(figure->get_square_figure(), 31.415, 0.01);
 }
 
 // TEST 6
 TEST(Figure3dTest, FigureVolume_CYLINDER) {
-    Figure3D* figure = new CYLINDER(1, 4);
+    Figure* figure = new CYLINDER(1, 4);
     EXPECT_NEAR(figure->get_volume_figure(), 12.566, 0.01);
 }
 
 // TEST 7
 TEST(Figure3dTest, FigureSquare_PARALLELEPIPED) {
-    Figure3D* figure = new PARALLELEPIPED(1, 4, 7);
+    Figure* figure = new PARALLELEPIPED(1, 4, 7);
     EXPECT_NEAR(figure->get_square_figure(), 78, 0.01);
 }
 
 // TEST 8
 TEST(Figure3dTest, FigureVolume_PARALLELEPIPED) {
-    Figure3D* figure = new PARALLELEPIPED(1, 4, 7);
+    Figure* figure = new PARALLELEPIPED(1, 4, 7);
     EXPECT_NEAR(figure->get_volume_figure(), 28, 0.01);
 }
 
@@ -46,8 +46,8 @@ TEST(SpaceTest, Space_Comp) {
 // TEST 10
 TEST(SpaceTest, Space_Add) {
     Space space;
-    Figure3D* figure1 = new BALL(3);
-    Figure3D* figure2 = new PARALLELEPIPED(2, 2, 2);
+    Figure* figure1 = new BALL(3);
+    Figure* figure2 = new PARALLELEPIPED(2, 2, 2);
     space.add_figure(*figure1, 0);
     space.add_figure(*figure2, 1);
     EXPECT_NEAR(space[0]->get_square_figure(), 113.094, 0.01);
@@ -57,9 +57,9 @@ TEST(SpaceTest, Space_Add) {
 // TEST 11
 TEST(SpaceTest, Space_Delete1) {
     Space space;
-    Figure3D* figure1 = new BALL(1);
-    Figure3D* figure2 = new CYLINDER(2, 4);
-    Figure3D* figure3 = new PARALLELEPIPED(1, 5, 7);
+    Figure* figure1 = new BALL(1);
+    Figure* figure2 = new CYLINDER(2, 4);
+    Figure* figure3 = new PARALLELEPIPED(1, 5, 7);
     space.add_figure(*figure1, 0);
     space.add_figure(*figure2, 1);
     space.add_figure(*figure3, 2);
@@ -71,9 +71,9 @@ TEST(SpaceTest, Space_Delete1) {
 // TEST 12
 TEST(SpaceTest, Space_Delete2) {
     Space space;
-    Figure3D* figure1 = new BALL(1);
-    Figure3D* figure2 = new CYLINDER(2, 4);
-    Figure3D* figure3 = new PARALLELEPIPED(1, 5, 7);
+    Figure* figure1 = new BALL(1);
+    Figure* figure2 = new CYLINDER(2, 4);
+    Figure* figure3 = new PARALLELEPIPED(1, 5, 7);
     space.add_figure(*figure1, 0);
     space.add_figure(*figure2, 1);
     space.add_figure(*figure3, 2);
@@ -85,12 +85,12 @@ TEST(SpaceTest, Space_Delete2) {
 // TEST 13
 TEST(SpaceTest, Figure_Max_Volume_Test) {
     Space space;
-    Figure3D* figure1 = new BALL(10); // 4188.666
-    Figure3D* figure2 = new CYLINDER(5, 10); // 785.375
-    Figure3D* figure3 = new PARALLELEPIPED(3, 4, 5); //60
+    Figure* figure1 = new BALL(10); // 4188.666
+    Figure* figure2 = new CYLINDER(5, 10); // 785.375
+    Figure* figure3 = new PARALLELEPIPED(3, 4, 5); //60
     space.add_figure(*figure1, 0);
     space.add_figure(*figure2, 1);
     space.add_figure(*figure3, 2);
 
-    EXPECT_NEAR(space.get_figure_with_max_volume().get_volume_figure(), 4188.666, 0.01);
+    EXPECT_NEAR(space.get_figure_with_max_volume()->get_volume_figure(), 4188.666, 0.01);
 }
