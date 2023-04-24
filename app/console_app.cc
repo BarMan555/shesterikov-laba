@@ -50,7 +50,7 @@ int main() {
 	while (true) {
 		int key = menu1(space);
 
-		// Ins 
+		// Ins - Add the figure in space
 		if (key == 82) {
 			system("cls");
 			int index;
@@ -93,7 +93,7 @@ int main() {
 						continue;
 					}
 				}
-				fig = new BALL(radius);
+				fig = new Ball(radius);
 				break;
 			case 2:
 				while (true)
@@ -120,7 +120,7 @@ int main() {
 						continue;
 					}
 				}
-				fig = new CYLINDER(radius, height);
+				fig = new Cylinder(radius, height);
 				break;
 			case 3:
 				while (true)
@@ -159,15 +159,15 @@ int main() {
 						continue;
 					}
 				}
-				fig = new PARALLELEPIPED(radius, height, lenght);
+				fig = new Parallelepiped(radius, height, lenght);
 				break;
 			default:
-				fig = new BALL(0);
+				fig = new Ball(0);
 			}
 			space.add_figure(fig->clone(), index); // Add the figure in space
 		}
 
-		// Del
+		// Del - Delete figure in space
 		if (key == 83) {
 			system("cls");
 			if (check_size(space)) continue;
@@ -186,7 +186,7 @@ int main() {
 			exit();
 		}
 
-		// Enter
+		// Enter - List of Figure in space
 		if (key == 13) {
 			system("cls");
 			if (check_size(space)) continue;
@@ -198,7 +198,7 @@ int main() {
 			exit();
 		}
 
-		// Space
+		// Space - Figure with max volume 
 		if(key == 32){
 			system("cls");
 			if (check_size(space)) continue;
@@ -210,7 +210,7 @@ int main() {
 			exit();
 		}
 
-		// Escape
+		// Escape - Exit
 		if (key == 27) { break; }
 	}
 	return 0;

@@ -18,48 +18,48 @@ protected:
 	Figure& operator=(const Figure&) = default;
 };
 
-class BALL : public Figure {
+class Ball : public Figure {
 protected:
-	double radius;
+	double _radius;
 public:
-	BALL() = default;
-	BALL(double r);
-	BALL(const BALL&) = default;
-	BALL& operator=(BALL& fig);
+	Ball() = default;
+	Ball(double r);
+	Ball(const Ball&) = default;
+	Ball& operator=(Ball fig);
 
-	void swap(BALL& ball);
+	void swap(Ball& ball);
 	FigurePtr clone() override;
 	double get_square_figure() const override;
 	double get_volume_figure() const override;
 	void print(std::ostream&) const override;
 };
 
-class CYLINDER : public Figure {
+class Cylinder : public Figure {
 protected:
-	double radius, height;
+	double _radius, _height;
 public:
-	CYLINDER() = default;
-	CYLINDER(double r, double h);
-	CYLINDER(const CYLINDER&) = default;
-	CYLINDER& operator=(CYLINDER& fig);
+	Cylinder() = default;
+	Cylinder(double r, double h);
+	Cylinder(const Cylinder&) = default;
+	Cylinder& operator=(Cylinder fig);
 
-	void swap(CYLINDER& cylinder);
+	void swap(Cylinder& cylinder);
 	FigurePtr clone() override;
 	double get_square_figure() const override;
 	double get_volume_figure() const override;
 	void print(std::ostream&) const override;
 };
 
-class PARALLELEPIPED : public Figure {
+class Parallelepiped : public Figure {
 protected:
-	double radius, height, lenght;
+	double _line1, _line2, _line3;
 public:
-	PARALLELEPIPED() = default;
-	PARALLELEPIPED(double r, double h, double l);
-	PARALLELEPIPED(const PARALLELEPIPED&) = default;
-	PARALLELEPIPED& operator=(PARALLELEPIPED& fig);
+	Parallelepiped() = default;
+	Parallelepiped(double l1, double l2, double l3);
+	Parallelepiped(const Parallelepiped&) = default;
+	Parallelepiped& operator=(Parallelepiped fig);
 
-	void swap(PARALLELEPIPED& paral);
+	void swap(Parallelepiped& paral);
 	FigurePtr clone() override;
 	double get_square_figure() const override;
 	double get_volume_figure() const override;

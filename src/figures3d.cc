@@ -8,66 +8,66 @@
 
 using namespace std;
 
-// -- BALL -- //
-BALL::BALL(double r) { radius = r; };
-BALL& BALL::operator=(BALL& fig) {
+// -- Ball -- //
+Ball::Ball(double r) { _radius = r; };
+Ball& Ball::operator=(Ball fig) {
 	swap(fig);
 	return *this;
 }
 
-void BALL::swap(BALL& ball) {
-	std::swap(radius, ball.radius);
+void Ball::swap(Ball& ball) {
+	std::swap(_radius, ball._radius);
 }
-FigurePtr BALL::clone() { return make_shared<BALL>(*this); }
-double BALL::get_square_figure() const { return 4 * PI * pow(radius, 2); }
-double BALL::get_volume_figure() const { return (4. / 3) * (PI * pow(radius, 3)); }
-void BALL::print(ostream& stream) const {
-	stream << "\tType of Figure: BALL" << endl
-	<< "\tRadius: " << this->radius << endl;
+FigurePtr Ball::clone() { return make_shared<Ball>(*this); }
+double Ball::get_square_figure() const { return 4 * PI * pow(_radius, 2); }
+double Ball::get_volume_figure() const { return (4. / 3) * (PI * pow(_radius, 3)); }
+void Ball::print(ostream& stream) const {
+	stream << "\tType of Figure: Ball" << endl
+	<< "\tRadius: " << this->_radius << endl;
 }
 // -- -- -- //
 
-// -- CYLINDER -- //
-CYLINDER::CYLINDER(double r, double h) { radius = r, height = h; }
-CYLINDER& CYLINDER::operator=(CYLINDER& fig) {
+// -- Cylinder -- //
+Cylinder::Cylinder(double r, double h) { _radius = r, _height = h; }
+Cylinder& Cylinder::operator=(Cylinder fig) {
 	swap(fig);
 	return *this;
 }
 
-void CYLINDER::swap(CYLINDER& cylinder) {
-	std::swap(radius, cylinder.radius);
-	std::swap(height, cylinder.height);
+void Cylinder::swap(Cylinder& cylinder) {
+	std::swap(_radius, cylinder._radius);
+	std::swap(_height, cylinder._height);
 }
-FigurePtr CYLINDER::clone() { return make_shared<CYLINDER>(*this); }
-double CYLINDER::get_square_figure() const { return 2 * PI * radius * (radius + height); }
-double CYLINDER::get_volume_figure() const { return PI * pow(radius, 2) * height; }
-void CYLINDER::print(ostream& stream) const {
-	stream << "\tType of Figure: CYLINDER" << endl
-	<< "\tRadius: " << this->radius << endl
-	<< "\tHeight: " << this->height <<endl;
+FigurePtr Cylinder::clone() { return make_shared<Cylinder>(*this); }
+double Cylinder::get_square_figure() const { return 2 * PI * _radius * (_radius + _height); }
+double Cylinder::get_volume_figure() const { return PI * pow(_radius, 2) * _height; }
+void Cylinder::print(ostream& stream) const {
+	stream << "\tType of Figure: Cylinder" << endl
+	<< "\tRadius: " << this->_radius << endl
+	<< "\tHeight: " << this->_height <<endl;
 }
 // -- -- -- //
 
-// -- PARALLELEPIPED -- //
-PARALLELEPIPED::PARALLELEPIPED(double r, double h, double l) { radius = r; height = h; lenght = l; }
-PARALLELEPIPED& PARALLELEPIPED::operator=(PARALLELEPIPED& fig) {
+// -- Parallelepiped -- //
+Parallelepiped::Parallelepiped(double l1, double l2, double l3) { _line1 = l1; _line2 = l2; _line3 = l3; }
+Parallelepiped& Parallelepiped::operator=(Parallelepiped fig) {
 	swap(fig);
 	return *this;
 }
 
-void PARALLELEPIPED::swap(PARALLELEPIPED& paral) {
-	std::swap(radius, paral.radius);
-	std::swap(height, paral.height);
-	std::swap(lenght, paral.lenght);
+void Parallelepiped::swap(Parallelepiped& paral) {
+	std::swap(_line1, paral._line1);
+	std::swap(_line2, paral._line2);
+	std::swap(_line3, paral._line3);
 }
-FigurePtr PARALLELEPIPED::clone() { return make_shared<PARALLELEPIPED>(*this); }
-double PARALLELEPIPED::get_square_figure() const { return 2 * (radius * height + radius * lenght + height * lenght); }
-double PARALLELEPIPED::get_volume_figure() const { return radius * height* lenght; }
-void PARALLELEPIPED::print(ostream& stream) const {
-	stream << "\tType of Figure: PARALLELEPIPED" << endl
-	<< "\t1st side: " << this->radius << endl
-	<< "\t2nd side: " << this->height << endl
-	<< "\t3rd side: " << this->lenght << endl;
+FigurePtr Parallelepiped::clone() { return make_shared<Parallelepiped>(*this); }
+double Parallelepiped::get_square_figure() const { return 2 * (_line1 * _line2 + _line1 * _line3 + _line2 * _line3); }
+double Parallelepiped::get_volume_figure() const { return _line1 * _line2 * _line3; }
+void Parallelepiped::print(ostream& stream) const {
+	stream << "\tType of Figure: Parallelepiped" << endl
+	<< "\t1st side: " << this->_line1 << endl
+	<< "\t2nd side: " << this->_line2 << endl
+	<< "\t3rd side: " << this->_line3 << endl;
 }
 // -- -- -- //
 
