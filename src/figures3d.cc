@@ -75,7 +75,7 @@ Space::Space(vector<FigurePtr> other) {
 Space::Space(const Space& other) {
 	const auto n = other.get_size();
 	_figures.reserve(n);
-	for (int i = 0; i < n; ++i) {
+	for (size_t i = 0; i < n; ++i) {
 		_figures.push_back(other[i]->clone());
 	}
 }
@@ -98,12 +98,12 @@ FigurePtr& Space::operator[](int index) {
 }
 
 void Space::add_figure(FigurePtr fig, int index) {
-	if (index < 0 || index > _figures.size()) throw std::runtime_error("Invalid index");
+	if (index < 0 || index > _figures.size()) throw runtime_error("Invalid index");
 	_figures.insert(_figures.begin() + index, fig);
 }
 
 void Space::delete_figure(int index) {
-	if (index < 0 || index > _figures.size()) throw std::runtime_error("Invalid index");
+	if (index < 0 || index > _figures.size()) throw runtime_error("Invalid index");
 	_figures.erase(_figures.begin() + index);
 }
 
@@ -116,7 +116,7 @@ void Space::print_figures(int index) const{
 int Space::get_figure_with_max_volume() const {
 	double max = 0;
 	int index = 0;
-	for (int i = 0; i < _figures.size(); ++i) {
+	for (size_t i = 0; i < _figures.size(); ++i) {
 		double calc_volume = _figures[i]->get_volume_figure();
 		if (calc_volume > max) {
 			max = calc_volume;
