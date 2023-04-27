@@ -12,7 +12,6 @@
 
 using namespace std;
 
-// TEST 1
 TEST(Figure3dTest, Figure_Square) {
     auto figure1 = make_shared<Ball>(2);
     auto figure2 = make_shared<Cylinder>(1, 4);
@@ -23,7 +22,6 @@ TEST(Figure3dTest, Figure_Square) {
     EXPECT_NEAR(figure3->get_square_figure(), 2 * (1 * 4 + 1 * 7 + 4 * 7), 0.01);
 }
 
-// TEST 2
 TEST(Figure3dTest, Figure_Volume) {
     auto figure1 = make_shared<Ball>(2);
     auto figure2 = make_shared<Cylinder>(1, 4);
@@ -34,7 +32,6 @@ TEST(Figure3dTest, Figure_Volume) {
     EXPECT_NEAR(figure3->get_volume_figure(), 1 * 4 * 7, 0.01);
 }
 
-// TEST 3
 TEST(Figure3dTest, Figure_Swap) {
     Ball ball(3);
     Ball ball2(10);
@@ -54,13 +51,11 @@ TEST(Figure3dTest, Figure_Swap) {
 
 // -- -- -- -- -- -- -- -- -- -- -- -- -- //
 
-// TEST 9
 TEST(SpaceTest, Space_Size) {
     Space space;
     EXPECT_EQ(space.get_size(), 0);
 }
 
-// TEST 10
 TEST(SpaceTest, Space_Add) {
     Space space;
     auto figure1 = make_shared<Ball>(3);
@@ -72,7 +67,6 @@ TEST(SpaceTest, Space_Add) {
     EXPECT_NEAR(space[1]->get_volume_figure(), 8, 0.01);
 }
 
-// TEST 11
 TEST(SpaceTest, Space_Delete) {
     Space space;
     auto figure1 = make_shared<Ball>(1);
@@ -87,7 +81,6 @@ TEST(SpaceTest, Space_Delete) {
     EXPECT_EQ(space.get_size(), 2);
 }
 
-// TEST 13
 TEST(SpaceTest, Figure_Max_Volume_Test) {
     Space space;
     auto figure1 = make_shared<Ball>(10); // 4188.666
