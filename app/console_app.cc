@@ -1,5 +1,5 @@
-#include "functions/figures3d.h"  // include #include <iostream>
-#include <conio.h>
+#include "functions/figures3d.h"  // dynamic library
+#include <conio.h> // _getch()
 
 using namespace std;
 
@@ -10,7 +10,7 @@ int get_key() {
 }
 
 // Menu of programm 
-int menu1(Space space) {
+int menu1(const Space& space) {
 	system("cls");
 	cout << "Number of figures in space: " << space.get_size() << endl << endl;
 	cout << "Add a figure by the index: Ins" << endl;
@@ -35,7 +35,7 @@ void exit() {
 }
 
 // Function Check number of figures in space
-bool check_size(Space& space) {
+bool check_size(const Space& space) {
 	if (space.get_size() == 0) {
 		cout << "We don't have figures!" << endl;
 		cout << "\nExit: Esc";
@@ -75,7 +75,7 @@ int main() {
 				break;
 			}
 			system("cls");
-			Figure* fig = nullptr;
+			FigurePtr fig = nullptr;
 			double radius = 0;
 			double height = 0;
 			double lenght = 0;
@@ -93,7 +93,7 @@ int main() {
 						continue;
 					}
 				}
-				fig = new Ball(radius);
+				fig = make_shared<Ball>(radius);
 				break;
 			case 2:
 				while (true)
@@ -120,7 +120,7 @@ int main() {
 						continue;
 					}
 				}
-				fig = new Cylinder(radius, height);
+				fig = make_shared<Cylinder>(radius, height);
 				break;
 			case 3:
 				while (true)
@@ -159,12 +159,12 @@ int main() {
 						continue;
 					}
 				}
-				fig = new Parallelepiped(radius, height, lenght);
+				fig = make_shared<Parallelepiped>(radius, height, lenght);
 				break;
 			default:
-				fig = new Ball(0);
+				fig = make_shared<Ball>(0);
 			}
-			space.add_figure(fig->clone(), index); // Add the figure in space
+			space.add_figure(fig, index); // Add the figure in space
 		}
 
 		// Del - Delete figure in space
@@ -203,7 +203,7 @@ int main() {
 			system("cls");
 			if (check_size(space)) continue;
 			int index = space.get_figure_with_max_volume();
-			cout << "Figure with max volume:" << endl;
+			cout << "Figure with max volume:" << endl << endl;
 			space[index]->print(cout);
 			cout << "\tVolume: " << space[index]->get_volume_figure() << endl;
 			cout << "\nExit: Esc";
